@@ -1,5 +1,5 @@
-import {SAMPLE_TASKS,DECORATIONS,freshState,sanitizeState,completeTask,purchase,observeTasks,validEndpoint} from './core.js';
-import {createRoom} from './room.js';
+import {SAMPLE_TASKS,DECORATIONS,freshState,sanitizeState,completeTask,purchase,observeTasks,validEndpoint} from './core.js?v=0.2.1';
+import {createRoom} from './room.js?v=0.2.1';
 let verifiedConnection='';
 const $=id=>document.getElementById(id),storageKey='tidy-hollow-v1';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -72,5 +72,7 @@ $('install-help').onclick=()=>info('A little home on your Home Screen','On your 
 document.addEventListener('visibilitychange',()=>{if(document.hidden){pauseTimer();stopCamera();if('speechSynthesis'in window)window.speechSynthesis.cancel();coach('Paused while you were away. Turn on the camera and restart when you’re ready.');}});window.addEventListener('pagehide',()=>{pauseTimer();stopCamera();});window.addEventListener('offline',()=>{stopWatching();coach('You’re offline. The checklist and rewards still work; AI feedback will wait.');});window.addEventListener('online',renderControls);
 window.addEventListener('hashchange',()=>navigate(location.hash.slice(1)));
 try{room=createRoom($('room'));}catch{$('room').hidden=true;$('room-fallback').hidden=false;}
+const openSettingsOnLoad=location.hash==='#settings';
 render();navigate(location.hash.slice(1)||'home');save();
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{/* First load still works if offline caching is unavailable. */});
+if(openSettingsOnLoad)$('settings-open').click();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{/* First load still works if offline caching is unavailable. */});
