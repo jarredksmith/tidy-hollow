@@ -1,4 +1,4 @@
-const CACHE='tidy-hollow-v1';
+const CACHE='tidy-hollow-v2';
 const FILES=['./','./index.html','./style.css','./app.js','./core.js','./room.js','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('tidy-hollow-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

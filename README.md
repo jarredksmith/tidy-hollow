@@ -2,7 +2,7 @@
 
 A cozy, installable iPhone web app that turns small cleaning tasks into coins and decorations for an original 3D sample room.
 
-**Status: first working prototype, not yet deployed.** The checklist, rewards, procedural 3D room and local progress are implemented. Camera and AI behavior still need validation on a physical iPhone. Live AI requires deployment of the included backend and a compatible Gemini model/API key. The current room is an original sample, not a reconstruction of your home.
+**Status: frontend live at https://jarredksmith.github.io/tidy-hollow/. OpenAI backend code ready; account setup required.** The checklist, rewards, procedural 3D room and local progress are implemented. Camera and AI behavior still need validation on a physical iPhone. Live AI requires deployment of the included backend and an OpenAI API key. The current room is an original sample, not a reconstruction of your home.
 
 ## What works without AI
 
@@ -17,7 +17,7 @@ A cozy, installable iPhone web app that turns small cleaning tasks into coins an
 
 ## What the AI integration implements
 
-The optional Cloudflare Worker analyzes JPEG frames using Gemini's image-capable `generateContent` API. It is periodic visual analysis, not a continuous video stream.
+The optional Cloudflare Worker analyzes JPEG frames using OpenAI's Responses API with image input and strict JSON results. It is periodic visual analysis, not a continuous video stream.
 
 - Scan one area and review up to five suggested tasks before replacing the current checklist.
 - Household notes such as “cereal belongs in the pantry.”
@@ -45,7 +45,7 @@ GitHub Pages availability for private repositories depends on your plan. GitHub 
 
 ## Connect live AI
 
-See [backend/SETUP.md](backend/SETUP.md). The browser never receives the provider API key. A separate household access token protects the backend. You enter that token into Settings; it stays in browser memory and is cleared on reload. Changing the token on the server revokes previous access.
+Follow the [browser-only OpenAI setup guide](backend/SETUP.md), including the Cloudflare deployment link. Settings now includes **Generate household token**, **Copy token**, and **Test connection**. The browser never receives the provider API key. A separate household access token protects the backend. You enter that token into Settings; it stays in browser memory and is cleared on reload. Changing the token on the server revokes previous access.
 
 ## Local development
 
@@ -70,7 +70,7 @@ Open `http://localhost:8080` on the development computer. A phone opening an ord
 
 ## Validation performed
 
-20 automated tests pass under Node 24; JavaScript syntax checks pass. The backend integration test uses a mocked AI provider. A software rendering of the actual 3D mesh was inspected and framing was checked at desktop and phone dimensions. Full browser layout, iPhone camera permission/recovery, wake lock, speech playback, home-screen installation and a paid live AI call have **not** been verified in this environment.
+24 automated tests pass under Node 24; JavaScript syntax checks pass. The backend integration test uses a mocked AI provider. A software rendering of the actual 3D mesh was inspected and framing was checked at desktop and phone dimensions. Full browser layout, iPhone camera permission/recovery, wake lock, speech playback, home-screen installation and a paid live OpenAI call have **not** been verified in this environment.
 
 ## Next steps after deployment
 
